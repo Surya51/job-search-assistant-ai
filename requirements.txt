@@ -1,0 +1,11 @@
+flask
+python-dotenv
+langchain
+langchain-huggingface
+langchain-community
+pypdf
+pyjwt
+faiss-cpu
+pymongo[srv]
+Flask-PyMongo
+flask_cors
