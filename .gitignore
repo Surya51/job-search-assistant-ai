@@ -15,6 +15,8 @@ uploads/
 # env files (can opt-in for committing if needed)
 .env*
 
+.vscode/
+
 dist/
 build/
 *.egg-info/
