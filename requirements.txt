@@ -1,6 +1,7 @@
 flask
 python-dotenv
 langchain
+waitress
 langchain-huggingface
 langchain-community
 pypdf
