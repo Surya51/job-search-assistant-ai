@@ -42,7 +42,7 @@ Deployment Stack:
 * Open terminal which by default should open the root folder `job-search-assistant-ai`.
 * Create a virtual environment with command `python -m venv .venv` and then activate it by the command `.venv\scripts\activate`
 * Run `pip install -r requirements.txt` in the terminal after activating, to download all the required packages needed for the API.
-* See below section to [create](https://github.com/Surya51/job-search-assistant-ai/blob/master/README.md#create-.env) the `.env` file, which is needed for all the functionality.
+* See below section to [create](https://github.com/Surya51/job-search-assistant-ai/tree/main?tab=readme-ov-file#create-env) the `.env` file, which is needed for all the functionality.
 * Run `waitress-serve --host 127.0.0.1 main:app` to serve the application at `http://127.0.0.1:8080`
 * Open the above url to check the health of the API.
 
