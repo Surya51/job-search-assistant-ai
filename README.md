@@ -42,10 +42,20 @@ Deployment Stack:
 * Open terminal which by default should open the root folder `job-search-assistant-ai`.
 * Create a virtual environment with command `python -m venv .venv` and then activate it by the command `.venv\scripts\activate`
 * Run `pip install -r requirements.txt` in the terminal after activating, to download all the required packages needed for the API.
-* Run `waitress-serve --host 127.0.0.1 main:app` to serve the application at `http://127.0.0.1`
+* See below section to [create](https://github.com/Surya51/job-search-assistant-ai/blob/master/README.md#create-.env) the `.env` file, which is needed for all the functionality.
+* Run `waitress-serve --host 127.0.0.1 main:app` to serve the application at `http://127.0.0.1:8080`
 * Open the above url to check the health of the API.
 
 Frontend git url: [**Job Search Assistant UI**](https://github.com/Surya51/job-search-assistant-ui) 
+
+### Create .env
+Add `.env` file at the root level and create below variables.
+```
+1. HF_ACCESS_TOKEN='token'    - this token should be created at huggingface.
+2. SECRET_KEY='secret'        - this secret should be created by you to handle the authentication encryption.
+3. MONGO_URI='uri'            - this uri is the mongo db connection string url.
+4. EXPIRATION_MINUES=60       - this being 60 is better, can be changed accordingly. This is for the JWT expiration.
+```
 
 ### Output
 
