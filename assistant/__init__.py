@@ -26,7 +26,7 @@ def create_app(app):
 
     CORS(app)
     inti_db(app)
-    init_langchain(app)
+    #init_langchain(app)
 
     app.register_blueprint(auth.auth_bp)
     app.register_blueprint(upload.upload_bp)
