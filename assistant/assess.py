@@ -15,7 +15,7 @@ from assistant.utils import get_token_data
 
 assess_bp = Blueprint("assess", __name__, url_prefix='/assess')
 
-@assess_bp.route('/generate/<assessment_guid>')
+@assess_bp.route('/generate/<assessment_guid>', methods=['POST'])
 def generate_questions(assessment_guid):
   token_data = get_token_data(True)
   if(not token_data.get('success')):
