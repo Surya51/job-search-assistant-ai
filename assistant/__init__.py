@@ -14,9 +14,7 @@ MONGO_URI = os.getenv('MONGO_URI')
 ACCESS_TOKEN = os.getenv('HF_ACCESS_TOKEN')
 EXPIRATION_MINUES = os.getenv('EXPIRATION_MINUES')
 
-def create_app():
-    app = Flask(__name__, instance_relative_config=True)
-
+def create_app(app):
     app.config.from_mapping(
         SECRET_KEY=SECRET_KEY,
         MONGO_URI=MONGO_URI,

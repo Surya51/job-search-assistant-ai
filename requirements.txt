@@ -1,8 +1,8 @@
 flask
 python-dotenv
-langchain
 waitress
 gunicorn
+langchain
 langchain-huggingface
 langchain-community
 pypdf
