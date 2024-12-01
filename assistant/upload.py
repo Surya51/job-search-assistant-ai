@@ -1,9 +1,10 @@
 import os
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, current_app, jsonify, request
 from flask_cors import CORS
 
+from google.cloud import storage
+
 from assistant.db import add_assessment_data, get_assessment_data_by_guid, get_latest_assessment, getStringGuid
-from assistant.jwt import decode_jwt
 from assistant.utils import get_token_data
 
 UPLOAD_FOLDER = 'uploads'
@@ -46,9 +47,10 @@ def upload_file():
         return jsonify({'success': False, 'error': errorMsg}), 400
 
     if file and allowed_file(file.filename):
-        filename = f'{getStringGuid()}.pdf'
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(file_path)
+        try:
+            file_path = _uploadFileToGCS(file)
+        except Exception as e:
+            return jsonify({'success': False, 'error': f'Unable to upload the resume: {e}'}), 400
 
     assessment_guid = add_assessment_data(file_path, jobDesc, token_data.get('data')['guid'])
 
@@ -69,3 +71,20 @@ def get_previous_data():
     hasData = True if response is not None else False
 
     return jsonify({'success': True, 'hasData': hasData, 'data': response}), 200
+
+def _uploadFileToGCS(uploaded_file):
+    project_id = current_app.config.get('CLOUD_PROJECT_ID')
+
+    gcs = storage.Client(project=project_id)
+
+    bucket_name = current_app.config.get('CLOUD_STORAGE_BUCKET')
+
+    bucket = gcs.get_bucket(bucket_name)
+
+    filename = f'{getStringGuid()}.pdf'
+
+    blob = bucket.blob(filename)
+
+    blob.upload_from_file(uploaded_file) #upload_from_filename(uploaded_file.filename)
+
+    return filename

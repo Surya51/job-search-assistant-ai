@@ -1,6 +1,7 @@
 from flask import Blueprint, current_app, g, jsonify, request
 
 from langchain_community.document_loaders import PyPDFLoader
+from langchain_google_community import GCSFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -109,7 +110,14 @@ def _generate_questions_from_assessment(assessment_guid):
   return True, questions, None
 
 def _loadPDFData(file_path):
-  file_loader = PyPDFLoader(file_path)
+  bucket_name = current_app.config.get('CLOUD_STORAGE_BUCKET')
+
+  project_name = current_app.config.get('CLOUD_PROJECT_NAME')
+
+  file_loader = GCSFileLoader(
+    project_name=project_name, bucket=bucket_name, blob=file_path, loader_func=_load_pdf
+  )
+
   page = file_loader.load_and_split()
 
   splitter = RecursiveCharacterTextSplitter(chunk_size=100,chunk_overlap=20)
@@ -124,3 +132,6 @@ def _loadPDFData(file_path):
   runnable = RunnableParallel(resume_context = retriever)
   g.runnable = runnable
   return runnable
+
+def _load_pdf(file_path):
+    return PyPDFLoader(file_path)

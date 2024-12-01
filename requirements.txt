@@ -2,9 +2,11 @@ flask
 python-dotenv
 waitress
 gunicorn
+google-cloud-storage
 langchain
 langchain-huggingface
 langchain-community
+langchain-google-community[gcs]
 pypdf
 pyjwt
 faiss-cpu
