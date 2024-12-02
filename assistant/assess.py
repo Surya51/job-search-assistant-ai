@@ -18,11 +18,14 @@ assess_bp = Blueprint("assess", __name__, url_prefix='/assess')
 
 CORS(assess_bp)
 
-@assess_bp.route('/generate/<assessment_guid>', methods=['POST'])
-def generate_questions(assessment_guid):
+@assess_bp.route('/generate', methods=['POST'])
+def generate_questions():
   token_data = get_token_data(True)
   if(not token_data.get('success')):
     return jsonify(token_data), 401
+  
+  data = request.json
+  assessment_guid = data.get("assessmentGuid")
 
   success, questions, error = _generate_questions_from_assessment(assessment_guid)
 
