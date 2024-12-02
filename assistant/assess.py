@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app, g, jsonify, request
 
+from flask_cors import CORS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_community import GCSFileLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -14,6 +15,8 @@ from assistant.db import get_assessment_data_by_guid, save_user_responses
 from assistant.utils import get_token_data
 
 assess_bp = Blueprint("assess", __name__, url_prefix='/assess')
+
+CORS(assess_bp)
 
 @assess_bp.route('/generate/<assessment_guid>', methods=['POST'])
 def generate_questions(assessment_guid):
